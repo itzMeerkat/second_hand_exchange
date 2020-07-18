@@ -4,6 +4,8 @@ import 'package:second_hand_exchange/auth_view/auth_view.dart';
 import 'package:second_hand_exchange/data/data_model.dart';
 import 'package:second_hand_exchange/item_view/item_view.dart';
 
+import 'app_frame.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -21,6 +23,8 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.blue,
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
-            home: ItemView()));
+            home: AppFrame(
+              body: ItemView(),
+            )));
   }
 }
