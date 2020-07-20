@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:second_hand_exchange/add_item_popup/add_item_popup.dart';
@@ -25,9 +24,17 @@ class AppFrame extends StatelessWidget {
         ],
       ),
       body: body,
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        showDialog(context: context, builder: (c) => AddItemPopup());
-      }),
+      floatingActionButton: Consumer<DataStorage>(
+          builder: (_, data, __) => FloatingActionButton(onPressed: () {
+                if (data.currentUser != null)
+                  showDialog(context: context, builder: (c) => AddItemPopup());
+                else
+                  showDialog(
+                      context: context,
+                      builder: (c) => AlertDialog(
+                            content: Text("Please login"),
+                          ));
+              })),
     );
   }
 }

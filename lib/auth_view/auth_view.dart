@@ -1,10 +1,12 @@
 import 'dart:html';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:second_hand_exchange/data/data_model.dart';
+import 'package:second_hand_exchange/data/user_record.dart';
 import 'package:second_hand_exchange/utils.dart' as utils;
 
 class AuthView extends StatefulWidget {
@@ -18,7 +20,8 @@ class AuthViewState extends State<AuthView> {
   bool loginOrSignUp = false; // false: login, true: sign up
 
   TextEditingController tc1 = TextEditingController(),
-      tc2 = TextEditingController();
+      tc2 = TextEditingController(),
+      contactTc = TextEditingController();
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String errorMessage = "";
@@ -60,6 +63,11 @@ class AuthViewState extends State<AuthView> {
                           ? null
                           : "Password must be 6 characters or longer",
                     ),
+                    if (loginOrSignUp)
+                      TextFormField(
+                        controller: contactTc,
+                        decoration: InputDecoration(labelText: "Contact"),
+                      ),
                     Text(errorMessage),
                     Consumer<DataStorage>(
                         builder: (_, data, __) => RaisedButton(
@@ -70,15 +78,29 @@ class AuthViewState extends State<AuthView> {
                                 pr.show().then((value) {
                                   doLoginOrSignUp(tc1.text, tc2.text)
                                       .then((value) {
+                                    if (loginOrSignUp) {
+                                      Firestore.instance
+                                          .collection('users')
+                                          .document(value.user.uid)
+                                          .setData({
+                                        'contact': contactTc.text
+                                      }).then((value) =>
+                                              Navigator.of(context).pop());
+                                    }
+                                    Firestore.instance
+                                        .collection('users')
+                                        .document(value.user.uid)
+                                        .get()
+                                        .then((value) =>
+                                            Provider.of<DataStorage>(context,
+                                                        listen: false)
+                                                    .userProfile =
+                                                UserRecord(value.data));
                                     data.currentUser = value.user;
-                                    Navigator.of(context).pop();
-                                    //print(value.user.email);
                                   }).catchError((e) {
-                                    //print("Error");
                                     errorMessage = e.message;
                                     setState(() {});
                                   }).whenComplete(() {
-                                    //print("whenComplete");
                                     pr.hide();
                                   });
                                 });

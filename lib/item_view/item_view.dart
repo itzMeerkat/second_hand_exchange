@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import 'package:second_hand_exchange/data/data_model.dart';
+import 'package:second_hand_exchange/data/item_record.dart';
+import 'package:second_hand_exchange/item_view/item_card.dart';
 
 class ItemView extends StatefulWidget {
   @override
@@ -10,15 +13,34 @@ class ItemView extends StatefulWidget {
   }
 }
 
-const List<String> fakeData = ['a', 'b', 'c', 'd', 'e'];
-
 class ItemViewState extends State<ItemView> {
+  List<ItemRecord> cards = List();
+
+  @override
+  void initState() {
+    super.initState();
+    Firestore.instance
+        .collection('items')
+        .limit(20)
+        .snapshots()
+        .listen((snapshot) {
+      cards = snapshot.documents
+          .map((e) => ItemRecord(
+              image: e.data['image'],
+              description: e.data['description'],
+              originalPrice: e.data['originalPrice'],
+              currentPrice: e.data['currentPrice']))
+          .toList();
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return StaggeredGridView.count(
       crossAxisCount: 2,
-      children: fakeData.map((e) => Card(child: Text(e))).toList(),
-      staggeredTiles: fakeData.map((e) => StaggeredTile.fit(1)).toList(),
+      children: cards.map((e) => ItemCard(data: e)).toList(),
+      staggeredTiles: cards.map((e) => StaggeredTile.fit(1)).toList(),
     );
   }
 }

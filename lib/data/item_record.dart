@@ -1,14 +1,29 @@
 class ItemRecord {
-  String imagePath;
-  String description;
-  int currentPrice;
-  int originalPrice;
+  final String image;
+  final String description;
+  final int currentPrice;
+  final int originalPrice;
 
-  String uid;
+  final String uid;
+  final String contact;
+  final String email;
 
   ItemRecord(
-      {this.imagePath,
+      {this.contact,
+      this.email,
+      this.image,
       this.description,
       this.currentPrice,
-      this.originalPrice});
+      this.originalPrice,
+      this.uid});
+
+  Map<String, dynamic> toJSON() {
+    return {
+      'image': this.image,
+      'description': this.description,
+      'currentPrice': this.currentPrice,
+      'originalPrice': this.originalPrice,
+      'uid': this.uid
+    };
+  }
 }
