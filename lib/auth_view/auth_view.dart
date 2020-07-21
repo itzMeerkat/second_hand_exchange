@@ -66,7 +66,7 @@ class AuthViewState extends State<AuthView> {
                     if (loginOrSignUp)
                       TextFormField(
                         controller: contactTc,
-                        decoration: InputDecoration(labelText: "Contact"),
+                        decoration: InputDecoration(labelText: "WeChat"),
                       ),
                     Text(errorMessage),
                     Consumer<DataStorage>(
@@ -82,26 +82,23 @@ class AuthViewState extends State<AuthView> {
                                       Firestore.instance
                                           .collection('users')
                                           .document(value.user.uid)
-                                          .setData({
-                                        'contact': contactTc.text
-                                      }).then((value) =>
-                                              Navigator.of(context).pop());
+                                          .setData({'contact': contactTc.text});
                                     }
+                                    data.currentUser = value.user;
                                     Firestore.instance
                                         .collection('users')
                                         .document(value.user.uid)
                                         .get()
-                                        .then((value) =>
-                                            Provider.of<DataStorage>(context,
-                                                        listen: false)
-                                                    .userProfile =
-                                                UserRecord(value.data));
-                                    data.currentUser = value.user;
+                                        .then((value) {
+                                      print("Setting current profile");
+                                      data.userProfile = UserRecord(value.data);
+                                    });
                                   }).catchError((e) {
                                     errorMessage = e.message;
                                     setState(() {});
                                   }).whenComplete(() {
                                     pr.hide();
+                                    Navigator.of(context).pop();
                                   });
                                 });
                               }

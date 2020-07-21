@@ -24,13 +24,15 @@ class ItemViewState extends State<ItemView> {
         .limit(20)
         .snapshots()
         .listen((snapshot) {
-      cards = snapshot.documents
-          .map((e) => ItemRecord(
-              image: e.data['image'],
-              description: e.data['description'],
-              originalPrice: e.data['originalPrice'],
-              currentPrice: e.data['currentPrice']))
-          .toList();
+      cards = snapshot.documents.map((e) {
+        return ItemRecord(
+            image: e.data['image'],
+            description: e.data['description'],
+            originalPrice: e.data['originalPrice'],
+            currentPrice: e.data['currentPrice'],
+            uid: e.data['uid'],
+            contact: e.data['contact']);
+      }).toList();
       setState(() {});
     });
   }

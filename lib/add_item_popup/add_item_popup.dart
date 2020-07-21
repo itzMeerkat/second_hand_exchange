@@ -31,8 +31,9 @@ class AddItemPopupState extends State<AddItemPopup> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        content: Form(
-            child: Column(
+        content: SingleChildScrollView(
+            child: Form(
+                child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         if (dispImage != null) Image.memory(dispImage),
@@ -78,7 +79,6 @@ class AddItemPopupState extends State<AddItemPopup> {
           print(descriptionCon.text);
           Firestore.instance.collection('items').add(ItemRecord(
                   uid: user.uid,
-                  email: user.email,
                   contact: Provider.of<DataStorage>(context, listen: false)
                       .userProfile
                       .contact,
@@ -87,8 +87,9 @@ class AddItemPopupState extends State<AddItemPopup> {
                   currentPrice: int.parse(cpCon.text),
                   image: base64Img)
               .toJSON());
+          Navigator.of(context).pop();
         }),
       ],
-    )));
+    ))));
   }
 }

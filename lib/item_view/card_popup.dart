@@ -11,7 +11,8 @@ class CardPopup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-        child: Column(
+        child: SingleChildScrollView(
+            child: Column(
       children: [
         if (data.image != null) Image.memory(base64Decode(data.image)),
         Padding(
@@ -19,15 +20,10 @@ class CardPopup extends StatelessWidget {
             child: Text(data.description)),
         Text("Current Price: \$${data.currentPrice.toString()}"),
         Padding(
-          padding: EdgeInsets.only(top: 20),
-          child: Column(
-            children: [
-              Text("Contact: ${data.contact}"),
-              Text("Email: ${data.email}")
-            ],
-          ),
+          padding: EdgeInsets.symmetric(vertical: 20),
+          child: Text("Contact: ${data.contact}"),
         )
       ],
-    ));
+    )));
   }
 }

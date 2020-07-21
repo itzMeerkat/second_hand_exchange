@@ -6,11 +6,9 @@ class ItemRecord {
 
   final String uid;
   final String contact;
-  final String email;
 
   ItemRecord(
       {this.contact,
-      this.email,
       this.image,
       this.description,
       this.currentPrice,
@@ -23,7 +21,8 @@ class ItemRecord {
       'description': this.description,
       'currentPrice': this.currentPrice,
       'originalPrice': this.originalPrice,
-      'uid': this.uid
+      'uid': this.uid,
+      'contact': this.contact
     };
   }
 }

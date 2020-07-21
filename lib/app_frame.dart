@@ -13,19 +13,23 @@ class AppFrame extends StatelessWidget {
       appBar: AppBar(
         actions: [
           Consumer<DataStorage>(
-            builder: (_, data, __) => data.currentUser == null
-                ? RaisedButton(
-                    child: Text("Login"),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed('/auth');
-                    })
-                : Text(data.currentUser.email),
-          )
+              builder: (_, data, __) => Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: data.currentUser == null
+                        ? RaisedButton(
+                            child: Text("Login"),
+                            onPressed: () {
+                              Navigator.of(context).pushNamed('/auth');
+                            })
+                        : Text(data.currentUser.email),
+                  ))
         ],
       ),
       body: body,
       floatingActionButton: Consumer<DataStorage>(
-          builder: (_, data, __) => FloatingActionButton(onPressed: () {
+          builder: (_, data, __) => FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () {
                 if (data.currentUser != null)
                   showDialog(context: context, builder: (c) => AddItemPopup());
                 else
