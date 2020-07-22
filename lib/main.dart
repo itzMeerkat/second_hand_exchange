@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:second_hand_exchange/auth_view/auth_view.dart';
 import 'package:second_hand_exchange/data/data_model.dart';
 import 'package:second_hand_exchange/item_view/item_view.dart';
+import 'package:second_hand_exchange/user_view/own_items.dart';
 
 import 'app_frame.dart';
 
@@ -17,7 +18,10 @@ class MyApp extends StatelessWidget {
         create: (_) => DataStorage(),
         child: MaterialApp(
             initialRoute: '/',
-            routes: {'/auth': (context) => AuthView()},
+            routes: {
+              '/auth': (context) => AuthView(),
+              '/myitems': (context) => OwnItems()
+            },
             title: 'Flutter Demo',
             theme: ThemeData(
               primarySwatch: Colors.blue,

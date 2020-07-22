@@ -3,6 +3,7 @@ class ItemRecord {
   final String description;
   final int currentPrice;
   final int originalPrice;
+  final String status;
 
   final String uid;
   final String contact;
@@ -13,7 +14,8 @@ class ItemRecord {
       this.description,
       this.currentPrice,
       this.originalPrice,
-      this.uid});
+      this.uid,
+      this.status});
 
   Map<String, dynamic> toJSON() {
     return {

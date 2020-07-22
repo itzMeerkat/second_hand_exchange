@@ -21,7 +21,11 @@ class AppFrame extends StatelessWidget {
                             onPressed: () {
                               Navigator.of(context).pushNamed('/auth');
                             })
-                        : Text(data.currentUser.email),
+                        : RaisedButton(
+                            onPressed: () {
+                              Navigator.of(context).pushNamed('/myitems');
+                            },
+                            child: Text(data.currentUser.email)),
                   ))
         ],
       ),

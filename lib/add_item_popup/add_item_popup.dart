@@ -85,7 +85,8 @@ class AddItemPopupState extends State<AddItemPopup> {
                   description: descriptionCon.text,
                   originalPrice: int.parse(opCon.text),
                   currentPrice: int.parse(cpCon.text),
-                  image: base64Img)
+                  image: base64Img,
+                  status: 'active')
               .toJSON());
           Navigator.of(context).pop();
         }),

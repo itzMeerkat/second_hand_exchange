@@ -21,6 +21,7 @@ class ItemViewState extends State<ItemView> {
     super.initState();
     Firestore.instance
         .collection('items')
+        .where('status', isEqualTo: 'active')
         .limit(20)
         .snapshots()
         .listen((snapshot) {
