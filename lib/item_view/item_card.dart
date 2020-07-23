@@ -21,12 +21,15 @@ class ItemCard extends StatelessWidget {
           );
         },
         child: Card(
-          child: Column(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              if (data.image != null) Image.memory(base64Decode(data.image)),
-              Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  child: Text(data.description)),
+              if (data.image != null)
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxHeight: 150),
+                  child: Image.memory(base64Decode(data.image)),
+                ),
+              Text(data.description),
               Text(
                 "Original Price: \$${data.originalPrice.toString()}",
                 style: TextStyle(fontSize: 10, color: Colors.grey),

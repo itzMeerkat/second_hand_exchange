@@ -45,7 +45,7 @@ class AddItemPopupState extends State<AddItemPopup> {
             print("LoadEnd");
             img.Image _i = img.decodeImage(fr.result);
             //print("DecodeImage");
-            _i = img.copyResize(_i, width: 500);
+            _i = img.copyResize(_i, width: 200);
             //print("ResizeImage");
             Uint8List smallImg = img.encodePng(_i);
             //print("EncodeImage");

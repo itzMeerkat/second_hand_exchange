@@ -24,7 +24,8 @@ class ItemRecord {
       'currentPrice': this.currentPrice,
       'originalPrice': this.originalPrice,
       'uid': this.uid,
-      'contact': this.contact
+      'contact': this.contact,
+      'status': this.status
     };
   }
 }
