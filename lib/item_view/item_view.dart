@@ -22,6 +22,7 @@ class ItemViewState extends State<ItemView> {
         .limit(20)
         .snapshots()
         .listen((snapshot) {
+      print("Get and build");
       cards = snapshot.documents.map((e) {
         return ItemRecord(
             image: e.data['image'],
